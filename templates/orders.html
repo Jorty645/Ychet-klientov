@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1>Список заказов</h1>
+    <a href="{{ url_for('add_order') }}" class="btn btn-success">➕ Добавить заказ</a>
+</div>
+
+{% if orders %}
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>№ заказа</th>
+                    <th>Клиент</th>
+                    <th>Дата заказа</th>
+                    <th>Описание</th>
+                    <th>Сумма</th>
+                    <th>Статус</th>
+                    <th>Действия</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for order in orders %}
+                <tr>
+                    <td>{{ order.order_number }}</td>
+                    <td>{{ order.last_name }} {{ order.first_name }} {{ order.middle_name or '' }}</td>
+                    <td>{{ order.order_date }}</td>
+                    <td>{{ order.description or '-' }}</td>
+                    <td>{{ "%.2f"|format(order.total_amount) }} ₽</td>
+                    <td>
+                        <span class="badge 
+                            {% if order.status == 'Завершен' %}bg-success
+                            {% elif order.status == 'В работе' %}bg-warning
+                            {% else %}bg-secondary{% endif %}">
+                            {{ order.status }}
+                        </span>
+                    </td>
+                    <td>
+                        <div class="btn-group btn-group-sm">
+                            <a href="{{ url_for('edit_order', order_id=order.id) }}" class="btn btn-outline-primary">✏️ Редакт.</a>
+                            <a href="{{ url_for('delete_order', order_id=order.id) }}" class="btn btn-outline-danger"
+                               onclick="return confirm('Вы уверены, что хотите удалить заказ {{ order.order_number }}?')">🗑️ Удалить</a>
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% else %}
+    <div class="alert alert-warning">
+        Заказы не найдены. <a href="{{ url_for('add_order') }}">Добавьте первый заказ</a>.
+    </div>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <h1>Добро пожаловать в систему учета клиентов</h1>
+        <p class="lead">Система для автоматизации учета клиентов малого бизнеса</p>
+    </div>
+</div>
+
+<div class="row mt-4">
+    <div class="col-md-4">
+        <div class="card stat-card">
+            <div class="card-body">
+                <div class="stat-number">{{ stats.total_clients }}</div>
+                <div>Всего клиентов</div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card stat-card">
+            <div class="card-body">
+                <div class="stat-number">{{ stats.total_orders }}</div>
+                <div>Всего заказов</div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card stat-card">
+            <div class="card-body">
+                <div class="stat-number">{{ "%.2f"|format(stats.total_revenue or 0) }} ₽</div>
+                <div>Общая выручка</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-4">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h5>Быстрые действия</h5>
+            </div>
+            <div class="card-body">
+                <a href="{{ url_for('clients') }}" class="btn btn-primary me-2">📋 Список клиентов</a>
+                <a href="{{ url_for('add_client') }}" class="btn btn-success me-2">➕ Добавить клиента</a>
+                <a href="{{ url_for('orders') }}" class="btn btn-info me-2">📦 Список заказов</a>
+                <a href="{{ url_for('reports') }}" class="btn btn-warning">📊 Отчеты</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
