@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Система учета клиентов</title>
+    
+    <style>
+        .navbar-brand { font-weight: bold; }
+        .table-actions { white-space: nowrap; }
+        .stat-card { text-align: center; padding: 20px; }
+        .stat-number { font-size: 2rem; font-weight: bold; color: #000000; }
+        .div a {color:#000000}
+    </style>
+</head>
+<body>
+    
+
+    <div class="container mt-4">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ 'danger' if category == 'error' else 'success' }} alert-dismissible fade show">
+                        {{ message }}
+                        
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        {% block content %}{% endblock %}
+    </div>
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container">
+            <div class="navbar-nav">
+                <a class="nav-link" href="/"><button>Главная</button></a>
+                <a class="nav-link" href="/clients"><button>Клиенты</button></a>
+                <a class="nav-link" href="/orders"><button>Заказы</button></a>
+
+
+            </div>
+        </div>
+    </nav>
+</body>
+</html>

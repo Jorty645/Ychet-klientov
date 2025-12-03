@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-8 mx-auto">
+        <div class="card">
+            <div class="card-header">
+                <h2>Редактирование клиента</h2>
+            </div>
+            <div class="card-body">
+                <form method="POST">
+                    <div class="row mb-3">
+                        <div class="col-md-4">
+                            <label class="form-label">Фамилия *</label>
+                            <input type="text" name="last_name" class="form-control" value="{{ client.last_name }}" required>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label">Имя *</label>
+                            <input type="text" name="first_name" class="form-control" value="{{ client.first_name }}" required>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label">Отчество</label>
+                            <input type="text" name="middle_name" class="form-control" value="{{ client.middle_name or '' }}">
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label class="form-label">Email</label>
+                            <input type="email" name="email" class="form-control" value="{{ client.email or '' }}">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Телефон</label>
+                            <input type="tel" name="phone" class="form-control" value="{{ client.phone or '' }}">
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label class="form-label">Дата регистрации</label>
+                            <input type="date" name="registration_date" class="form-control" value="{{ client.registration_date }}">
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Адрес</label>
+                        <textarea name="address" class="form-control" rows="2">{{ client.address or '' }}</textarea>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Примечания</label>
+                        <textarea name="notes" class="form-control" rows="3">{{ client.notes or '' }}</textarea>
+                    </div>
+
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                        <a href="{{ url_for('clients') }}" class="btn btn-secondary me-md-2"> <button>Отмена</button></a>
+                        <button type="submit" class="btn btn-primary"> Сохранить изменения</button>
+                    </div>
+                    <hr>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

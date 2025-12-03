@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Главная страница</h1>
+
+<p>Всего клиентов: {{ stats.total_clients }}</p>
+<p>Всего заказов: {{ stats.total_orders }}</p>
+<p>Общая выручка: {{ stats.total_revenue }}</p>
+{% endblock %}

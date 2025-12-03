@@ -1,0 +1,64 @@
+<!-- список клиентов -->
+{% extends "base.html" %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1>Список клиентов</h1>
+    <a href="{{ url_for('add_client') }}" class="btn btn-success"> <button>Добавить клиента</button></a>
+</div>
+
+<form method="get" class="mb-4">
+    <div class="input-group">
+        <input type="text" name="search" class="form-control" placeholder="Поиск по ФИО или email..." value="{{ search }}">
+        <button class="btn btn-primary" type="submit"> Поиск</button>
+    </div>
+</form>
+
+{% if clients %}
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Фамилия</th>
+                    <th>Имя</th>
+                    <th>Отчество</th>
+                    <th>Email</th>
+                    <th>Телефон</th>
+                    <th>Дата регистрации</th>
+                    <th>Действия</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for client in clients %}
+                <tr>
+                    <td>{{ client.id }}</td>
+                    <td>{{ client.last_name }}</td>
+                    <td>{{ client.first_name }}</td>
+                    <td>{{ client.middle_name or '-' }}</td>
+                    <td>{{ client.email or '-' }}</td>
+                    <td>{{ client.phone or '-' }}</td>
+                    <td>{{ client.registration_date }}</td>
+                    <td>
+                        <div class="btn-group btn-group-sm">
+                            <a href="{{ url_for('edit_client', client_id=client.id) }}" class="btn btn-outline-primary"> <button>Редактировать</button></a>
+                            <a href="{{ url_for('delete_client', client_id=client.id) }}" class="btn btn-outline-danger" 
+                               onclick="return confirm('Вы уверены, что хотите удалить клиента {{ client.last_name }} {{ client.first_name }}? Все его заказы также будут удалены.')"> <button>Удалить</button></a>
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <hr>
+    </div>
+{% else %}
+    <div class="alert alert-warning">
+        {% if search %}
+            Клиенты по запросу "{{ search }}" не найдены.
+        {% else %}
+            Клиенты не найдены. <a href="{{ url_for('add_client') }}">Добавьте первого клиента</a>.
+        {% endif %}
+    </div>
+{% endif %}
+{% endblock %}

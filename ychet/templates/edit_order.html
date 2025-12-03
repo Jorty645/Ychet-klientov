@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-8 mx-auto">
+        <div class="card">
+            <div class="card-header">
+                <h2>Редактирование заказа</h2>
+            </div>
+            <div class="card-body">
+                <form method="POST">
+                    <div class="mb-3">
+                        <label class="form-label">Клиент *</label>
+                        <select name="client_id" class="form-select" required>
+                            <option value="">Выберите клиента</option>
+                            {% for client in clients %}
+                            <option value="{{ client.id }}" {% if client.id == order.client_id %}selected{% endif %}>
+                                {{ client.last_name }} {{ client.first_name }} {{ client.middle_name or '' }}
+                            </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label class="form-label">Дата заказа *</label>
+                            <input type="date" name="order_date" class="form-control" value="{{ order.order_date }}" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Номер заказа *</label>
+                            <input type="text" name="order_number" class="form-control" value="{{ order.order_number }}" required>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Описание заказа</label>
+                        <textarea name="description" class="form-control" rows="3">{{ order.description or '' }}</textarea>
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label class="form-label">Сумма *</label>
+                            <input type="number" name="total_amount" class="form-control" step="0.01" min="0" value="{{ order.total_amount }}" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Статус *</label>
+                            <select name="status" class="form-select" required>
+                                <option value="Новый" {% if order.status == 'Новый' %}selected{% endif %}>Новый</option>
+                                <option value="В работе" {% if order.status == 'В работе' %}selected{% endif %}>В работе</option>
+                                <option value="Завершен" {% if order.status == 'Завершен' %}selected{% endif %}>Завершен</option>
+                                <option value="Отменен" {% if order.status == 'Отменен' %}selected{% endif %}>Отменен</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                        <a href="{{ url_for('orders') }}" class="btn btn-secondary me-md-2"> <button>Отмена</button></a>
+                        <button type="submit" class="btn btn-primary"> Сохранить изменения</button>
+                    </div>
+                    <hr>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
